@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三角洲行动：零号大坝攻略 - PC版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1a2a3a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+        }
+        
+        /* 侧边导航栏 */
+        .sidebar {
+            background: rgba(13, 27, 42, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .sidebar h3 {
+            color: #4da6ff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(77, 166, 255, 0.3);
+        }
+        
+        .nav-links {
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-bottom: 10px;
+        }
+        
+        .nav-links a {
+            color: #a0c8ff;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(77, 166, 255, 0.2);
+            color: #4da6ff;
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            color: #4da6ff;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(77, 166, 255, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #a0c8ff;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(77, 166, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4da6ff, #1e5bac);
+        }
+        
+        h2 {
+            color: #4da6ff;
+            border-bottom: 2px solid #4da6ff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #4da6ff;
+            margin-right: 12px;
+            border-radius: 50%;
+        }
+        
+        h3 {
+            color: #66b3ff;
+            margin: 20px 0 10px;
+            font-size: 1.5rem;
+        }
+        
+        /* 两列布局 - PC端优化 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .character-card {
+            background: rgba(30, 45, 60, 0.8);
+            border-radius: 8px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(77, 166, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .character-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4da6ff, transparent);
+        }
+        
+        .character-name {
+            color: #66b3ff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .character-icon {
+            width: 45px;
+            height: 45px;
+            background: #4da6ff;
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(77, 166, 255, 0.5);
+        }
+        
+        .route-map {
+            background: rgba(10, 20, 30, 0.8);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(77, 166, 255, 0.2);
+            position: relative;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 600px; /* 增加地图高度 */
+            background: rgba(15, 25, 35, 0.9);
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+            overflow: auto; /* 改为auto，允许滚动 */
+            border: 1px solid rgba(77, 166, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0c8ff;
+            font-size: 1.2rem;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .map-placeholder p {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #88b3e0;
+        }
+        
+        /* 地图网格背景 */
+        .map-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(77, 166, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(77, 166, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .tip-card {
+            background: rgba(30, 45, 60, 0.8);
+            border-radius: 8px;
+            padding: 25px;
+            border-left: 4px solid #4da6ff;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tip-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 35px 35px 0;
+            border-color: transparent rgba(77, 166, 255, 0.3) transparent transparent;
+        }
+        
+        .tip-title {
+            color: #66b3ff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .equipment-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .equipment-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .equipment-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background: #4da6ff;
+            border-radius: 50%;
+        }
+        
+        .route-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .route-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+        }
+        
+        .route-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #4da6ff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            font-weight: bold;
+            box-shadow: 0 0 5px rgba(77, 166, 255, 0.5);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(77, 166, 255, 0.3);
+            color: #a0c8ff;
+            font-size: 1rem;
+            grid-column: 1 / -1;
+        }
+        
+        .note {
+            background: rgba(77, 166, 255, 0.1);
+            border-left: 4px solid #4da6ff;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .highlight {
+            color: #4da6ff;
+            font-weight: bold;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-grid, .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边导航栏 -->
+        <aside class="sidebar">
+            <h3>攻略导航</h3>
+            <ul class="nav-links">
+                <li><a href="#operators">干员与装备</a></li>
+                <li><a href="#routes">路线规划</a></li>
+                <li><a href="#tips">关键技巧</a></li>
+                <li><a href="#map">战略地图</a></li>
+            </ul>
+        </aside>
+        
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <header>
+                <h1>三角洲行动：零号大坝攻略</h1>
+                <p class="subtitle">零号大坝是《三角洲行动》中一个充满机遇与挑战的地点，合理的策略能让你以低成本获得高回报。本攻略将为您提供干员选择、行动路线和关键技巧。</p>
+            </header>
+            
+            <section class="section" id="operators">
+                <h2>👤 干员与装备选择</h2>
+                <p>选择合适的干员和装备是成功跑刀的基础。</p>
+                
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-name">
+                            <div class="character-icon">威</div>
+                            <span>威龙</span>
+                        </div>
+                        <p>移动速度快，利于快速转移和撤离，适合喜欢快速行动的玩家。在零号大坝这种需要快速移动的地图中尤其重要。</p>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">
+                            <div class="character-icon">蜂</div>
+                            <span>蜂医</span>
+                        </div>
+                        <p>自带治疗技能，能有效提升生存能力，尤其可以抑制如骨折等负面状态。在长时间作战中非常有用。</p>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-name">
+                            <div class="character-icon">骇</div>
+                            <span>骇爪</span>
+                        </div>
+                        <p>扫描技能能帮助提前探测敌人，规避风险，适合团队协作。在复杂地形中能提供关键情报优势。</p>
+                    </div>
+                </div>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>核心装备推荐</h3>
+                        <ul class="equipment-list">
+                            <li><strong>武器：</strong>G18手枪（可搭配枪管和33发弹匣）或93R手枪（使用四级弹药）</li>
+                            <li><strong>防具：</strong>三级头/甲（即使耐久较低，但成本效益高）</li>
+                            <li><strong>背包：</strong>容量较大的紫色背包（20格）并搭配13格弹挂</li>
+                            <li><strong>消耗品：</strong>AP6.3子弹、手术包和强效注射器</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3>装备优先级</h3>
+                        <ul class="equipment-list">
+                            <li><strong>高优先级：</strong>武器、防具、医疗用品</li>
+                            <li><strong>中优先级：</strong>弹药、背包、战术装备</li>
+                            <li><strong>低优先级：</strong>装饰品、非必要配件</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <strong>提示：</strong> 装备选择应根据您的游戏风格和团队需求进行调整。单排时建议优先考虑生存能力，而团队作战时可以更专注于特定角色。
+                </div>
+            </section>
+            
+            <section class="section" id="routes">
+                <h2>🗺️ 核心路线规划</h2>
+                <p>根据你的出生点，选择高效且相对安全的搜索路线至关重要。</p>
+                
+                <div class="route-map" id="map">
+                    <h3>零号大坝战略地图</h3>
+                    <div class="map-container">
+                        <div class="map-grid"></div>
+                        <div class="map-placeholder">
+                            <strong>地图区域 (600px高度)</strong>
+                            <p><img src="res/1728882627_751432.jpg"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>主要路线说明</h3>
+                <ul class="route-list">
+                    <li>
+                        <div class="route-number">1</div>
+                        <div>
+                            <strong>游客中心附近出生：</strong>如果开局发现刷了"大保险"，可以放弃搜索游客中心，直接前往小军营，接着吃下大变电、小变电的物资，然后沿地下通道到水泥厂搜索剩余资源后撤离。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="route-number">2</div>
+                        <div>
+                            <strong>变电站出生：</strong>降落后迅速前往变电站二楼搜索保险箱，再到一楼拿储物箱。之后向大坝方向的行政楼移动，搜刮完毕后再经管道区域撤离。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="route-number">3</div>
+                        <div>
+                            <strong>西侧索降点：</strong>降落后直奔水泥厂主楼，获取电脑、航空箱及大武器箱。随后向北推进至行政辖区，从西门或侧门进入，清理一楼和二楼物资点。
+                        </div>
+                    </li>
+                    <li>
+                        <div class="route-number">4</div>
+                        <div>
+                            <strong>东侧索降点：</strong>从养护站或主变电站T字路口出发，优先抢占行政辖区东楼。途中可搜索停车场的航空箱和大武器箱。
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="note">
+                    <strong>提示：</strong> 路线选择应根据实际战局情况灵活调整。如果发现其他玩家已经占领目标区域，应及时改变计划，避免不必要的冲突。
+                </div>
+            </section>
+            
+            <section class="section" id="tips">
+                <h2>💎 关键技巧与注意事项</h2>
+                <p>掌握以下技巧能显著提高你的生存几率和收益。</p>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-title">物资搜刮优先级</div>
+                        <p>高价值物资点应优先搜索，例如变电站的保险箱、行政楼的航空箱以及管道区域的物资箱。一些彩蛋点也值得留意，比如井盖可能出象牙，集装箱可能出高价值红色装备。</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-title">战斗与生存技巧</div>
+                        <p>跑刀的核心是高效搜刮并安全撤离，而非战斗。尽量避免正面冲突，特别是远离热门资源争夺区。善用静步减少声响，利用掩体观察。</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-title">撤离策略</div>
+                        <p>避免在前10分钟的高风险期撤离。后期可选择拉闸开启电梯撤离点或等待第二波飞机。当物资价值达到约60万时，应考虑保底撤离，避免被全装队拦截。</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-title">高级目标</div>
+                        <p>如果对局开始时看到导弹轰炸坝体的动画，意味着可以直接进入坝体深处的金库，这是出高价值物品的好地方。否则通常需要完成"破壁者行动"才能进入。</p>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <strong>高级技巧：</strong> 行政辖区的首领赛伊德会掉落M249、PKM等高阶武器，但挑战他需要较好的装备（如四级护甲和冲锋枪）和团队配合。不要贪心导致超重，这会影响移动速度和撤离点的选择。
+                </div>
+            </section>
+            
+            <footer>
+                <p>三角洲行动零号大坝攻略 | 本攻略仅供参考，实际游戏体验可能因版本更新而有所不同</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
